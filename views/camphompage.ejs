@@ -1,0 +1,19 @@
+<% include ./partials/header %>
+<style media="screen">
+
+</style>
+<div class="jumbotron jumbotron-fluid" >
+  <div class='container'>
+  <% camp.forEach(function (cam) { %>
+  <div class="container" style="width: 18rem;display:inline-block">
+  <img class="card-img-top" src='<%= cam.image %>' alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title"><%= cam.name %></h5>
+    <p class="card-text"><%= cam.description.substring(0, 40)%> ... more</p>
+    <a href="/camp/<%= cam._id %>" class="btn btn-primary">Edit post</a>
+  </div>
+</div>
+  <% }) %>
+  </div>
+</div>
+<% include ./partials/footer %>

@@ -1,0 +1,44 @@
+<% include ./partials/header %>
+<style>
+.wrapper {
+  width:80%;
+  margin:5%;
+}
+</style>
+<div class='wrapper'>
+<form style='display:inline' action='' method=''>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">CAMP TITILE</label>
+    <input type="text" class="form-control" value="<%= camp.name %>" id="exampleFormControlInput1" placeholder="title" readonly>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">CAMP IMAGE</label>
+    <input type="text"  class="form-control" value='<%= camp.image %>' id="exampleFormControlInput1" placeholder="title" readonly>
+</div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">DESCRIPTION</label>
+    <textarea  class="form-control"  id="exampleFormControlTextarea1" rows="3" readonly><%= camp.description %></textarea>
+  </div>
+  <div class="form-group">
+  <button class='btn btn-secondary'> <a href='/camp/<%= camp._id %>/edit'> UPDATE</a></button>
+   </div>
+</form>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container" align='center' >
+    <p>This is Comment section of the application</p>
+    <% include ./comment %>
+  </div><hr>
+  <div style="display:inline">
+  <% camp.posts.forEach(function (com, i) { %>
+    <div>
+    <%= i + 1 %>
+<p style="display:inline"> <label> <%= com.title %> :</label></p>
+<p style="display:inline"> <%= com.author %></p>
+</div>
+    <% }) %>
+  </div>
+</div>
+</div>
+
+
+<% include ./partials/footer %>

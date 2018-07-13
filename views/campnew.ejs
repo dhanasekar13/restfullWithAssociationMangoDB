@@ -1,0 +1,27 @@
+<% include ./partials/header %>
+<style>
+.wrapper {
+  width:80%;
+  margin:5%;
+}
+</style>
+<div class='wrapper'>
+<form action='/camp' method='post'>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">CAMP TITILE</label>
+    <input type="text" name='camp[title]' class="form-control" id="exampleFormControlInput1" placeholder="title">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">CAMP IMAGE</label>
+    <input type="text" name='camp[img]' class="form-control" id="exampleFormControlInput1" placeholder="title">
+</div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">DESCRIPTION</label>
+    <textarea name='camp[des]' class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+  <div class="form-group">
+
+  <input type="submit" name=""class="btn btn-primary mb-2" value="submit">  </div>
+</form>
+</div>
+<% include ./partials/footer %>
