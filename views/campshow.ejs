@@ -11,10 +11,11 @@
     <label for="exampleFormControlInput1">CAMP TITILE</label>
     <input type="text" class="form-control" value="<%= camp.name %>" id="exampleFormControlInput1" placeholder="title" readonly>
   </div>
-  <div class="form-group">
+  <div class="form-group" >
     <label for="exampleFormControlInput1">CAMP IMAGE</label>
-    <input type="text"  class="form-control" value='<%= camp.image %>' id="exampleFormControlInput1" placeholder="title" readonly>
-</div>
+
+    <img class="card-img-top" src='<%= camp.image %>' alt="Card image cap" style="width:18%;height:5%">
+    </div>
   <div class="form-group">
     <label for="exampleFormControlSelect2">DESCRIPTION</label>
     <textarea  class="form-control"  id="exampleFormControlTextarea1" rows="3" readonly><%= camp.description %></textarea>
@@ -32,8 +33,10 @@
   <% camp.posts.forEach(function (com, i) { %>
     <div>
     <%= i + 1 %>
-<p style="display:inline"> <label> <%= com.title %> :</label></p>
-<p style="display:inline"> <%= com.author %></p>
+    <a href='/comment/<%= com._id %>'>
+<p style="display:inline"> <strong><%= com.author %></strong> : <%= com.title %> :</p>
+</a>
+
 </div>
     <% }) %>
   </div>

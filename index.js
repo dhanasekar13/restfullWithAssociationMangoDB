@@ -1,39 +1,23 @@
-var express = require('express')
-var app = express()
-var mongoose = require('mongoose')
-var bodyParser = require('body-Parser')
-var campground = require('./models/camp')
-var methodOverride = require('method-override')
-var deletedb = require('./seed')
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(methodOverride("_method"))
-mongoose.connect('mongodb://localhost/camp')
+var requirenpm = require('./requirefile')
 
-app.get('/', function (req,resp) {
-  resp.send(' this is the home page ')
+requirenpm.app.get('/', function (req,resp) {
+  resp.redirect('/camp')
 })
-
-app.get('/camp',function (req,resp) {
-  campground.campground.find({},function (err, data) {
-    if(err) {
-       console.log(err);
-    }
+requirenpm.app.get('/camp',function (req,resp) {
+  requirenpm.campground.campground.find({},function (err, data) {
+    if(err) {  console.log(err);  }
     else {
       console.log(data);
       resp.render('camphompage', {camp:data})
     }
   })
 })
-
-app.get('/camp/new', function (req,resp) {
+requirenpm.app.get('/camp/new', function (req,resp) {
   resp.render('campnew')
 })
-
-app.post('/camp', function (req, resp) {
+requirenpm.app.post('/camp', function (req, resp) {
   console.log(req.body)
-  campground.campground.create({
+  requirenpm.campground.campground.create({
     name:req.body.camp.title,
     image:req.body.camp.img,
     description:req.body.camp.des
@@ -45,11 +29,10 @@ app.post('/camp', function (req, resp) {
   })
   resp.redirect('/camp')
 })
-
-app.get('/camp/:id/edit', function (req, resp) {
-  campground.campground.findById(req.params.id, function (err,data) {
+requirenpm.app.get('/camp/:id/edit', function (req, resp) {
+  requirenpm.campground.campground.findById(req.params.id, function (err,data) {
     if(err) { console.log(err)
-    resp.redirect('/camp')
+    resp.redirect('/camp/'+ req.params.id)
   }
     else {
       console.log(data)
@@ -57,19 +40,20 @@ app.get('/camp/:id/edit', function (req, resp) {
     }
   })
 })
-app.get('/camp/:id', function (req,resp){
-  campground.campground.findById(req.params.id, function (err,data) {
+requirenpm.app.get('/camp/:id', function (req,resp){
+  requirenpm.campground.campground.findById(req.params.id).populate('posts').exec(function (err,data) {
     if(err) { console.log(err)
       console.log("0");
     resp.redirect('/camp')
   }
     else {
+      console.log(data)
           resp.render('campshow', {camp:data})
     }
   })
 })
-app.put('/camp/:id', function (req, resp) {
-  campground.campground.findByIdAndUpdate(req.params.id, req.body.camp, function (err, data){
+requirenpm.app.put('/camp/:id', function (req, resp) {
+  requirenpm.campground.campground.findByIdAndUpdate(req.params.id, req.body.camp, function (err, data){
     if (err) { console.log(err) }
     else {
       console.log(data)
@@ -77,9 +61,8 @@ app.put('/camp/:id', function (req, resp) {
   })
   resp.redirect('/camp')
 })
-
-app.delete('/camp/:id', function (req, resp) {
-  campground.campground.findByIdAndRemove(req.params.id, function (err, data) {
+requirenpm.app.delete('/camp/:id', function (req, resp) {
+  requirenpm.campground.campground.findByIdAndRemove(req.params.id, function (err, data) {
     if (err) { console.log(err)}
     else{
       console.log(data)
@@ -87,23 +70,20 @@ app.delete('/camp/:id', function (req, resp) {
     resp.redirect('/camp')
   })
 })
-
-app.get('/delete/campall', function (req, resp) {
-  deletedb()
+requirenpm.app.get('/delete/campall', function (req, resp) {
+  requirenpm.deletedb()
   resp.redirect('/camp')
 })
-app.post('/comment', function (req, resp) {
-  console.log('------------------------');
+requirenpm.app.post('/comment', function (req, resp) {
   console.log(req.body)
 console.log(req.body.comment.title);
-  campground.comments.create({
+  requirenpm.campground.comments.create({
     title:req.body.comment.title,
     author:req.body.comment.author
   },function (err, data) {
     if (err) { console.log(err) }
     else {
-      console.log('=====================================================');
-      campground.campground.findById(req.body.comment.id, function (err, values) {
+      requirenpm.campground.campground.findById(req.body.comment.id, function (err, values) {
         if(err) { console.log(err); }
         else {
           console.log(values)
@@ -119,6 +99,35 @@ console.log(req.body.comment.title);
     }
   })
 })
-app.listen(1234,function (){
+requirenpm.app.get('/comment/:id', function (req, resp) {
+  requirenpm.campground.comments.findById(req.params.id, function (err,data) {
+    if(err) { console.log(err)
+      console.log("0");
+    resp.redirect('/camp')
+  }
+    else {
+      resp.render('commentshow', {comment:data})
+    }
+  })
+})
+requirenpm.app.put('/comment/:id', function (req, resp) {
+  requirenpm.campground.comments.findByIdAndUpdate(req.params.id, req.body.comm, function (err, data){
+    if (err) { console.log(err) }
+    else {
+      console.log(data)
+    }
+  })
+  resp.redirect('/camp')
+})
+requirenpm.app.delete('/comment/:id', function (req, resp) {
+  requirenpm.campground.comments.findByIdAndRemove(req.params.id, function (err, data) {
+    if (err) { console.log(err)}
+    else{
+      console.log(data)
+    }
+    resp.redirect('/camp')
+  })
+})
+requirenpm.app.listen(1234,function (){
   console.log('THE PORT 1234 IS RUNNING THE APPLICATION');
 })
