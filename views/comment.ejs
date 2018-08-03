@@ -1,9 +1,21 @@
 <form class="" action="/comment" method="post">
-  <label>Title</label>
-  <input type="text" name="comment[title]" value="">
-  <label>Author</label>
-  <input type="text" name="comment[author]" value="">
-  <input hidden type="text" name="comment[id]" value="<%= camp._id %>">
-  <input type="submit" name="" value="Hit to Commit">
 
+
+  <div class="card">
+    <h5 class="card-header">ADD A COMMENT</h5>
+    <div class="card-body">
+      <div class="card-title"  style="display:inline">
+      <label>Title</label>
+      <input type="text" name="comment[title]" value="">
+
+    </div>
+    <div class="card-text" style="display:inline">
+        <label>Author</label>
+      <input type="text" name="comment[author]" value="" style="display:inline">
+      <input hidden type="text" name="comment[id]" value="<%= camp._id %>" style="display:inline">
+        </div><input type="submit" name="" class="btn btn-outline-dark" value="Hit to Commit">
+
+
+    </div>
+  </div>
 </form>
