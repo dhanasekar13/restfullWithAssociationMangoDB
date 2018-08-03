@@ -6,6 +6,8 @@
 }
 </style>
 <div class='wrapper'>
+
+  <button type="button" name="button"> <a href="/logout">LOGOUT</a> </button>
 <form style='display:inline' action='' method=''>
   <div class="form-group">
     <label for="exampleFormControlInput1">CAMP TITILE</label>
@@ -27,14 +29,13 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container" align='center' >
     <p>This is Comment section of the application</p>
-    <% include ./comment %>
+    <div><% include ./comment %></div>
   </div><hr>
   <div style="display:inline">
   <% camp.posts.forEach(function (com, i) { %>
-    <div>
-    <%= i + 1 %>
+    <div align=left style="margin-left:10%">
     <a href='/comment/<%= com._id %>'>
-<p style="display:inline"> <strong><%= com.author %></strong> : <%= com.title %> :</p>
+<p style="display:inline"> <strong><%= com.author %></strong> : <%= com.title %> </p>
 </a>
 
 </div>
